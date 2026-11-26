@@ -28,7 +28,6 @@ import {
   SlidersHorizontal
 } from 'lucide-react';
 
-// --- Service Definitions ---
 const SERVICES = [
   {
     id: 'cctv',
@@ -68,7 +67,6 @@ const SERVICES = [
   }
 ];
 
-// --- Sample Blueprint SVG Data URIs for Instant Demo ---
 const SAMPLE_DRAWING_1 =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(`
@@ -107,7 +105,6 @@ const SAMPLE_DRAWING_2 =
   <text x="50" y="485" fill="#9ca3af" font-family="monospace" font-size="14">SITE GATEWAY DIAGRAM — BASEMENT PARKING AUTOMATION</text>
 </svg>`);
 
-// --- Initial Seed Data ---
 const INITIAL_SUPPLIERS = [
   {
     id: 'sup-1',
@@ -229,12 +226,10 @@ const INITIAL_RFQS = [
 ];
 
 export default function App() {
-  // Navigation & Role State
-  const [role, setRole] = useState('client'); // 'client' | 'supplier'
-  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'create-rfq' | 'my-rfqs' | 'supplier-board'
+  const [role, setRole] = useState('client');
+  const [activeTab, setActiveTab] = useState('home');
   const [activeSupplierId, setActiveSupplierId] = useState('sup-1');
 
-  // Persistent Data State
   const [rfqs, setRfqs] = useState(() => {
     try {
       const saved = localStorage.getItem('flora_elv_rfqs_v1');
@@ -252,12 +247,10 @@ export default function App() {
     }
   }, [rfqs]);
 
-  // Modal & Inspection State
   const [selectedRfqId, setSelectedRfqId] = useState(null);
   const [previewAttachment, setPreviewAttachment] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
 
-  // Create RFQ Form State
   const [rfqForm, setRfqForm] = useState({
     serviceId: 'cctv',
     title: '',
@@ -269,7 +262,6 @@ export default function App() {
     attachments: []
   });
 
-  // Supplier Bid Form State
   const [bidForm, setBidForm] = useState({
     price: '',
     timeline: '7 Working Days',
@@ -290,7 +282,6 @@ export default function App() {
 
   const selectedRfq = rfqs.find((r) => r.id === selectedRfqId) || null;
 
-  // --- Handlers ---
   const handleStartRfqWithService = (serviceId) => {
     setRole('client');
     setRfqForm((prev) => ({ ...prev, serviceId }));
@@ -466,7 +457,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
-      {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-3 animate-bounce">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
@@ -474,7 +464,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Top Role Switcher Banner (For Instant Testing of Both Sides) */}
       <div className="bg-slate-900 text-slate-200 border-b border-slate-800 px-4 py-2 text-xs">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -529,10 +518,8 @@ export default function App() {
         </div>
       </div>
 
-      {/* Main Header (Syaanh.com clean aesthetic) */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-18 py-3.5 flex items-center justify-between gap-4">
-          {/* Logo */}
           <button
             onClick={() => {
               setActiveTab('home');
@@ -558,7 +545,6 @@ export default function App() {
             </div>
           </button>
 
-          {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
             <button
               onClick={() => {
@@ -603,7 +589,6 @@ export default function App() {
             </button>
           </nav>
 
-          {/* Primary CTA */}
           <div className="flex items-center gap-3">
             {role === 'client' ? (
               <button
@@ -636,14 +621,783 @@ export default function App() {
         </div>
       </header>
 
-      {/* MAIN CONTENT AREA */}
       <main className="flex-1">
-        {/* ================= VIEW 1: LANDING / SERVICES DIRECTORY (Syaanh.com Style) ================= */}
         {activeTab === 'home' && (
           <div>
-            {/* Hero Section */}
             <section className="bg-gradient-to-b from-emerald-50/80 via-white to-slate-50 border-b border-slate-200/80 pt-12 pb-16 px-4 sm:px-6">
               <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 items-center">
                 <div className="lg:col-span-7 space-y-6">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-emerald-200 shadow-xs text-xs font-semibold text-emerald-800">
-                    <ShieldCheck className="w-4 h-4 text-emerald-6
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    Certified ELV & MOI-Approved Contractors Network
+                  </div>
+
+                  <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+                    One Request. Multiple Quotes from{' '}
+                    <span className="text-emerald-600">Certified ELV Suppliers.</span>
+                  </h1>
+
+                  <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
+                    Select your security or ELV service, upload site photos or CAD drawings, and broadcast your RFQ to pre-vetted contractors. Compare competing offers side-by-side and award the best fit.
+                  </p>
+
+                  <div className="bg-white p-2.5 rounded-2xl shadow-lg shadow-slate-200/70 border border-slate-200 flex flex-col sm:flex-row gap-2.5 max-w-2xl">
+                    <div className="flex-1 flex items-center gap-2.5 px-3 py-2 bg-slate-50 rounded-xl border border-slate-200/80">
+                      <SlidersHorizontal className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <select
+                        value={rfqForm.serviceId}
+                        onChange={(e) =>
+                          setRfqForm((prev) => ({ ...prev, serviceId: e.target.value }))
+                        }
+                        className="w-full bg-transparent text-sm font-semibold text-slate-800 focus:outline-none"
+                      >
+                        {SERVICES.map((srv) => (
+                          <option key={srv.id} value={srv.id}>
+                            {srv.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <button
+                      onClick={() => handleStartRfqWithService(rfqForm.serviceId)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-6 py-3.5 rounded-xl flex items-center justify-center gap-2 transition shrink-0 shadow-md shadow-emerald-600/20"
+                    >
+                      <span>Send RFQ to Suppliers</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <div className="pt-2 grid grid-cols-3 gap-4 max-w-lg">
+                    <div>
+                      <div className="text-2xl font-extrabold text-slate-900">100%</div>
+                      <div className="text-xs text-slate-500">Vetted ELV Vendors</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-extrabold text-slate-900">CAD & Photos</div>
+                      <div className="text-xs text-slate-500">Direct Blueprint Upload</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-extrabold text-slate-900">3+ Bids</div>
+                      <div className="text-xs text-slate-500">Avg. Offers per RFQ</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5">
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-6 space-y-5">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                      <div>
+                        <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
+                          Live Bidding Activity
+                        </span>
+                        <h3 className="text-base font-bold text-slate-900">
+                          Recent Commercial RFQs
+                        </h3>
+                      </div>
+                      <button
+                        onClick={() => setActiveTab('my-rfqs')}
+                        className="text-xs font-semibold text-emerald-600 hover:underline flex items-center gap-1"
+                      >
+                        View All <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    <div className="space-y-3">
+                      {rfqs.slice(0, 2).map((rfq) => {
+                        const srv = getServiceMeta(rfq.serviceId);
+                        const Icon = srv.icon;
+                        return (
+                          <div
+                            key={rfq.id}
+                            onClick={() => {
+                              setSelectedRfqId(rfq.id);
+                              setActiveTab(role === 'client' ? 'my-rfqs' : 'supplier-board');
+                            }}
+                            className="p-4 rounded-xl border border-slate-200/90 hover:border-emerald-400 bg-slate-50/70 hover:bg-emerald-50/30 transition cursor-pointer group"
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="flex items-center gap-2.5">
+                                <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-emerald-600 shrink-0">
+                                  <Icon className="w-5 h-5" />
+                                </div>
+                                <div>
+                                  <span className="text-[11px] font-bold text-slate-400">
+                                    {rfq.id} • {rfq.location}
+                                  </span>
+                                  <h4 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700 line-clamp-1">
+                                    {rfq.title}
+                                  </h4>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="mt-3 pt-2.5 border-t border-slate-200/60 flex items-center justify-between text-xs">
+                              <span className="text-slate-500 flex items-center gap-1">
+                                <FileText className="w-3.5 h-3.5 text-slate-400" />
+                                {rfq.attachments.length} Drawing/Photo
+                              </span>
+                              <span className="font-bold text-emerald-700 bg-emerald-100/80 px-2.5 py-0.5 rounded-full">
+                                {rfq.bids.length} Supplier Offer{rfq.bids.length !== 1 ? 's' : ''}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="bg-slate-900 text-white rounded-xl p-4 flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-xs text-slate-300">Are you an ELV Contractor?</p>
+                        <p className="text-sm font-bold">Bid on open tenders today</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setRole('supplier');
+                          setActiveTab('supplier-board');
+                        }}
+                        className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs font-semibold transition shrink-0"
+                      >
+                        Supplier Portal
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
+                    Specialized ELV & Security Categories
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+                    Choose a Service to Broadcast Your RFQ
+                  </h2>
+                </div>
+                <p className="text-sm text-slate-500 max-w-md">
+                  Every request is automatically distributed to all verified suppliers specializing in your selected system.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                {SERVICES.map((service) => {
+                  const Icon = service.icon;
+                  return (
+                    <div
+                      key={service.id}
+                      className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 hover:shadow-xl hover:border-emerald-300 transition flex flex-col justify-between group"
+                    >
+                      <div>
+                        <div className="flex items-start justify-between gap-4 mb-4">
+                          <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition">
+                            <Icon className="w-7 h-7" />
+                          </div>
+                          <span className="text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-700">
+                            {service.badge}
+                          </span>
+                        </div>
+
+                        <h3 className="text-xl font-bold text-slate-900 mb-2">
+                          {service.title}
+                        </h3>
+                        <p className="text-sm text-slate-600 leading-relaxed mb-5">
+                          {service.description}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {service.popularTags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200/80 text-slate-600"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span className="text-xs text-slate-500">
+                          Supports CAD Drawings & Site Photos
+                        </span>
+                        <button
+                          onClick={() => handleStartRfqWithService(service.id)}
+                          className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-600 hover:text-emerald-700"
+                        >
+                          Request Quotes
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="bg-white border-t border-slate-200 py-16 px-4 sm:px-6">
+              <div className="max-w-7xl mx-auto">
+                <div className="text-center max-w-2xl mx-auto mb-12">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                    How Flora.elv Works
+                  </h2>
+                  <p className="text-sm text-slate-600 mt-2">
+                    Streamlined B2B procurement from site survey drawings to final contractor award.
+                  </p>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white font-extrabold flex items-center justify-center mb-4">
+                      1
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">
+                      Select Service & Upload Drawings
+                    </h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Choose CCTV, Scanners, Access Control, or Parking Systems. Attach floor plans, CAD layouts, or site photos and send to all suppliers in one click.
+                    </p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white font-extrabold flex items-center justify-center mb-4">
+                      2
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">
+                      Receive Competing Supplier Bids
+                    </h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Verified ELV contractors review your technical drawings and submit itemized offers with pricing, equipment brands, delivery timeline, and warranty terms.
+                    </p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white font-extrabold flex items-center justify-center mb-4">
+                      3
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">
+                      Compare Offers & Choose Winner
+                    </h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Evaluate multiple quotes side-by-side based on price, MOI certification, and AMC coverage, then award the contract directly on the platform.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'create-rfq' && (
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+            <button
+              onClick={() => setActiveTab('home')}
+              className="text-sm font-semibold text-slate-500 hover:text-slate-900 mb-4 inline-flex items-center gap-1"
+            >
+              ← Back to Services
+            </button>
+
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div className="bg-slate-900 text-white px-6 sm:px-8 py-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                  Client RFQ Broadcast
+                </span>
+                <h1 className="text-2xl font-extrabold mt-1">
+                  Request Quotations from All Certified Suppliers
+                </h1>
+                <p className="text-sm text-slate-300 mt-1">
+                  Fill in your project scope and attach site photos or CAD drawings for accurate pricing.
+                </p>
+              </div>
+
+              <form onSubmit={handleCreateRfqSubmit} className="p-6 sm:p-8 space-y-6">
+                <div>
+                  <label className="block text-sm font-bold text-slate-800 mb-2.5">
+                    1. Select ELV / Security Service Category *
+                  </label>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {SERVICES.map((srv) => {
+                      const Icon = srv.icon;
+                      const isSelected = rfqForm.serviceId === srv.id;
+                      return (
+                        <button
+                          type="button"
+                          key={srv.id}
+                          onClick={() =>
+                            setRfqForm((prev) => ({ ...prev, serviceId: srv.id }))
+                          }
+                          className={`p-3.5 rounded-xl border text-left flex items-center gap-3 transition ${
+                            isSelected
+                              ? 'border-emerald-600 bg-emerald-50/70 ring-2 ring-emerald-600/20'
+                              : 'border-slate-200 hover:border-slate-300 bg-white'
+                          }`}
+                        >
+                          <div
+                            className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
+                              isSelected
+                                ? 'bg-emerald-600 text-white'
+                                : 'bg-slate-100 text-slate-600'
+                            }`}
+                          >
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-slate-900">
+                              {srv.shortTitle}
+                            </div>
+                            <div className="text-[11px] text-slate-500 line-clamp-1">
+                              {srv.title}
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div className="sm:col-span-2">
+                    <label className="block text-sm font-bold text-slate-800 mb-1.5">
+                      2. Project / RFQ Title *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g., Installation of 24 IP Cameras & Access Control for Warehouse"
+                      value={rfqForm.title}
+                      onChange={(e) =>
+                        setRfqForm((prev) => ({ ...prev, title: e.target.value }))
+                      }
+                      className="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-emerald-600"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-slate-800 mb-1.5">
+                      Company / Organization Name
+                    </label>
+                    <input
+                      type="text"
+                      value={rfqForm.clientName}
+                      onChange={(e) =>
+                        setRfqForm((prev) => ({ ...prev, clientName: e.target.value }))
+                      }
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-emerald-600"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-slate-800 mb-1.5">
+                      Project Location
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g., West Bay, Lusail, Industrial Area"
+                      value={rfqForm.location}
+                      onChange={(e) =>
+                        setRfqForm((prev) => ({ ...prev, location: e.target.value }))
+                      }
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-emerald-600"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-slate-800 mb-1.5">
+                      Estimated Budget Range (QAR)
+                    </label>
+                    <select
+                      value={rfqForm.budgetRange}
+                      onChange={(e) =>
+                        setRfqForm((prev) => ({ ...prev, budgetRange: e.target.value }))
+                      }
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:border-emerald-600"
+                    >
+                      <option>Under 15,000 QAR (Maintenance / Small Setup)</option>
+                      <option>15,000 – 25,000 QAR</option>
+                      <option>25,000 – 40,000 QAR</option>
+                      <option>40,000 – 75,000 QAR</option>
+                      <option>75,000+ QAR (Enterprise Turnkey)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-slate-800 mb-1.5">
+                      Target Execution Timeline
+                    </label>
+                    <select
+                      value={rfqForm.urgency}
+                      onChange={(e) =>
+                        setRfqForm((prev) => ({ ...prev, urgency: e.target.value }))
+                      }
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:border-emerald-600"
+                    >
+                      <option>Urgent (Within 7 Days)</option>
+                      <option>Within 2 Weeks</option>
+                      <option>Within 1 Month</option>
+                      <option>Annual Maintenance Contract (AMC)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-slate-800 mb-1.5">
+                    3. Technical Scope & Requirements *
+                  </label>
+                  <textarea
+                    rows={4}
+                    required
+                    placeholder="Specify quantities (e.g., number of cameras, doors, barriers, X-ray machines), cabling distance, MOI requirements, or maintenance schedule..."
+                    value={rfqForm.description}
+                    onChange={(e) =>
+                      setRfqForm((prev) => ({ ...prev, description: e.target.value }))
+                    }
+                    className="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-emerald-600"
+                  />
+                </div>
+
+                <div className="bg-slate-50 p-5 rounded-2xl border border-dashed border-slate-300">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                        <Upload className="w-4 h-4 text-emerald-600" />
+                        4. Upload Site Photos & Engineering Drawings (CAD / PDF / Images)
+                      </h4>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Suppliers inspect these drawings to calculate accurate BOQ quantities and cable runs.
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleAttachSampleDrawing(1)}
+                        className="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-emerald-400 text-slate-700 transition"
+                      >
+                        + Sample CCTV CAD
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleAttachSampleDrawing(2)}
+                        className="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-emerald-400 text-slate-700 transition"
+                      >
+                        + Sample Gate Plan
+                      </button>
+                    </div>
+                  </div>
+
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept="image/*,.pdf,.dwg,.dxf,.svg"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-full py-6 rounded-xl bg-white border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 transition flex flex-col items-center justify-center gap-1.5 text-center"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                      <ImageIcon className="w-5 h-5" />
+                    </div>
+                    <span className="text-sm font-bold text-slate-800">
+                      Click to upload site photos or floor plan drawings
+                    </span>
+                    <span className="text-xs text-slate-400">
+                      Supports PNG, JPG, SVG, PDF, or CAD exports
+                    </span>
+                  </button>
+
+                  {rfqForm.attachments.length > 0 && (
+                    <div className="mt-4 grid sm:grid-cols-2 gap-3">
+                      {rfqForm.attachments.map((file, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between gap-3 bg-white p-2.5 rounded-xl border border-slate-200"
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            {file.url && file.url.startsWith('data:image') ? (
+                              <img
+                                src={file.url}
+                                alt={file.name}
+                                className="w-10 h-10 rounded-lg object-cover border border-slate-200 shrink-0"
+                              />
+                            ) : (
+                              <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                                <FileText className="w-5 h-5" />
+                              </div>
+                            )}
+                            <div className="min-w-0">
+                              <p className="text-xs font-bold text-slate-800 truncate">
+                                {file.name}
+                              </p>
+                              <p className="text-[11px] text-slate-400 uppercase">
+                                {file.type} • {file.size}
+                              </p>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveAttachment(idx)}
+                            className="p-1 text-slate-400 hover:text-red-500"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100">
+                  <p className="text-xs text-slate-500">
+                    Your RFQ will be broadcast immediately to{' '}
+                    <strong className="text-slate-800">
+                      {INITIAL_SUPPLIERS.length} verified ELV service providers
+                    </strong>
+                    .
+                  </p>
+                  <button
+                    type="submit"
+                    className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition"
+                  >
+                    <Send className="w-4 h-4" />
+                    Broadcast RFQ to All Suppliers
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'my-rfqs' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
+                  Client Procurement Dashboard
+                </span>
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                  My Sent RFQs & Received Supplier Offers
+                </h1>
+              </div>
+              <button
+                onClick={() => setActiveTab('create-rfq')}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-sm"
+              >
+                <Plus className="w-4 h-4" /> New RFQ
+              </button>
+            </div>
+
+            <div className="grid lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-4 space-y-3">
+                {rfqs.map((rfq) => {
+                  const srv = getServiceMeta(rfq.serviceId);
+                  const isSelected = selectedRfq?.id === rfq.id;
+                  return (
+                    <div
+                      key={rfq.id}
+                      onClick={() => setSelectedRfqId(rfq.id)}
+                      className={`p-4 rounded-2xl border cursor-pointer transition ${
+                        isSelected
+                          ? 'bg-white border-emerald-600 ring-2 ring-emerald-600/15 shadow-md'
+                          : 'bg-white border-slate-200 hover:border-emerald-300'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <span className="text-xs font-bold text-slate-400">{rfq.id}</span>
+                        {rfq.status === 'awarded' ? (
+                          <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                            <Award className="w-3 h-3" /> Awarded
+                          </span>
+                        ) : (
+                          <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">
+                            Receiving Bids
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-sm font-bold text-slate-900 line-clamp-2 mb-2">
+                        {rfq.title}
+                      </h3>
+
+                      <div className="text-xs text-slate-500 flex items-center gap-1.5 mb-3">
+                        <span className="font-semibold text-emerald-700">{srv.shortTitle}</span>
+                        <span>•</span>
+                        <span>{rfq.createdAt}</span>
+                      </div>
+
+                      <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span className="text-slate-500">
+                          {rfq.attachments.length} file(s)
+                        </span>
+                        <span className="font-extrabold text-slate-900">
+                          {rfq.bids.length} Offer{rfq.bids.length !== 1 ? 's' : ''} Received
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="lg:col-span-8">
+                {!selectedRfq ? (
+                  <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
+                    <Search className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+                    <h3 className="text-base font-bold text-slate-800">
+                      Select an RFQ from the left to compare supplier quotes
+                    </h3>
+                    <p className="text-sm text-slate-500 mt-1">
+                      You can review technical proposals, inspect uploaded drawings, and award the winning bidder.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    <div className="bg-white rounded-2xl border border-slate-200 p-6">
+                      <div className="flex flex-wrap items-start justify-between gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-bold px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700">
+                              {selectedRfq.id}
+                            </span>
+                            <span className="text-xs font-semibold text-emerald-700">
+                              {getServiceMeta(selectedRfq.serviceId).title}
+                            </span>
+                          </div>
+                          <h2 className="text-xl font-extrabold text-slate-900">
+                            {selectedRfq.title}
+                          </h2>
+                        </div>
+
+                        <div className="text-right">
+                          <div className="text-xs text-slate-400">Target Budget</div>
+                          <div className="text-sm font-bold text-slate-900">
+                            {selectedRfq.budgetRange}
+                          </div>
+                        </div>
+                      </div>
+
+                      <p className="text-sm text-slate-600 leading-relaxed mt-4">
+                        {selectedRfq.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-4 mt-4 text-xs text-slate-500">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                          {selectedRfq.location}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5 text-slate-400" />
+                          {selectedRfq.urgency}
+                        </span>
+                      </div>
+
+                      {selectedRfq.attachments.length > 0 && (
+                        <div className="mt-5 pt-4 border-t border-slate-100">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5">
+                            Attached Site Drawings & Photos ({selectedRfq.attachments.length})
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            {selectedRfq.attachments.map((att, i) => (
+                              <button
+                                key={i}
+                                onClick={() => setPreviewAttachment(att)}
+                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl border border-slate-200 hover:border-emerald-500 bg-slate-50 text-left transition group"
+                              >
+                                <Eye className="w-4 h-4 text-emerald-600" />
+                                <div>
+                                  <div className="text-xs font-bold text-slate-800 group-hover:text-emerald-700">
+                                    {att.name}
+                                  </div>
+                                  <div className="text-[10px] text-slate-400">
+                                    Click to inspect drawing
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-extrabold text-slate-900">
+                          Supplier Offers Received ({selectedRfq.bids.length})
+                        </h3>
+                        {selectedRfq.bids.length === 0 && (
+                          <button
+                            onClick={() => {
+                              setRole('supplier');
+                              setActiveTab('supplier-board');
+                            }}
+                            className="text-xs font-bold text-blue-600 hover:underline"
+                          >
+                            Switch to Supplier Portal to simulate a bid →
+                          </button>
+                        )}
+                      </div>
+
+                      {selectedRfq.bids.length === 0 ? (
+                        <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-8 text-center">
+                          <Clock className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+                          <h4 className="text-sm font-bold text-slate-800">
+                            Broadcasted to all suppliers — awaiting quotations
+                          </h4>
+                          <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
+                            Use the top switcher to toggle into the <strong>Supplier Portal</strong> and submit offers from multiple ELV vendors to see them compared here.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          {selectedRfq.bids
+                            .slice()
+                            .sort((a, b) => a.price - b.price)
+                            .map((bid, index) => {
+                              const isWinner = selectedRfq.awardedBidId === bid.id;
+                              return (
+                                <div
+                                  key={bid.id}
+                                  className={`bg-white rounded-2xl border p-6 transition ${
+                                    isWinner
+                                      ? 'border-emerald-600 ring-2 ring-emerald-600/20 bg-emerald-50/20'
+                                      : 'border-slate-200'
+                                  }`}
+                                >
+                                  <div className="flex flex-wrap items-start justify-between gap-4 pb-4 border-b border-slate-100">
+                                    <div>
+                                      <div className="flex flex-wrap items-center gap-2">
+                                        <h4 className="text-base font-extrabold text-slate-900">
+                                          {bid.supplierName}
+                                        </h4>
+                                        <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                                          {bid.supplierBadge}
+                                        </span>
+                                        {index === 0 && selectedRfq.bids.length > 1 && (
+                                          <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                                            Lowest Price
+                                          </span>
+                                        )}
+                                      </div>
+                                      <p className="text-xs text-slate-500 mt-1">
+                                        Submitted {bid.submittedAt} • Vendor Rating: ★ {bid.rating}/5.0
+                                      </p>
+                                    </div>
+
+                                    <div className="text-right">
+                                      <div className="text-2xl font-extrabold text-slate-900">
+                                        {bid.price.toLocaleString()}{' '}
+                                        <span className="text-xs font-bold text-slate-500">
+                                          QAR
+                                        </span>
+                                      </div>
+                                      <div className="text-xs font-semibold text-emerald-700">
+                                        Delivery: {bid.timeline}
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div className="grid sm:grid-cols-2 gap-4 py-4 text-xs">
+                                    <div className="bg-slate-50 p-3 rounded-xl">
+                                      <span
